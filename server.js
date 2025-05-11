@@ -5,11 +5,12 @@ const session = require('express-session');
 
 const app = express();
 
-// Serve files from the public folder
+// Serve static files from the public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Parse form data
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Session middleware
 app.use(session({
@@ -19,13 +20,13 @@ app.use(session({
     cookie: { secure: false } // Set to true if using HTTPS
 }));
 
-// Connect to MySQL (use environment variables for Render)
+// Connect to local MySQL
 const db = mysql.createConnection({
-    host: process.env.MYSQL_HOST || 'localhost',
-    user: process.env.MYSQL_USER || 'root',
-    password: process.env.MYSQL_PASSWORD || 'Rootpass@123',
-    database: process.env.MYSQL_DATABASE || 'organ_donation',
-    port: process.env.MYSQL_PORT || 3306
+    host: 'localhost',
+    user: 'root',
+    password: 'Rootpass@123', // Replace with your actual MySQL root password
+    database: 'organ_donation',
+    port: 3306
 });
 
 db.connect((err) => {
@@ -82,7 +83,7 @@ app.get('/api/donors', (req, res) => {
     db.query(query, [searchParam, searchParam], (err, results) => {
         if (err) {
             console.log('Error fetching donors:', err);
-            res.send('Error fetching donors');
+            res.status(500).json({ error: 'Error fetching donors' });
             return;
         }
         res.json(results);
@@ -110,7 +111,7 @@ app.post('/login', (req, res) => {
     db.query(query, [username, password, role], (err, results) => {
         if (err) {
             console.log('Error during login:', err);
-            res.send('Error during login');
+            res.status(500).send('Error during login');
             return;
         }
         if (results.length > 0) {
@@ -133,7 +134,7 @@ app.post('/doctor-login', (req, res) => {
     db.query(query, [username, password], (err, results) => {
         if (err) {
             console.log('Error during doctor login:', err);
-            res.send('Error during login');
+            res.status(500).send('Error during login');
             return;
         }
         if (results.length > 0) {
@@ -180,8 +181,8 @@ app.get('/', (req, res) => {
     res.redirect('/register.html');
 });
 
-// Start the server
-const PORT = process.env.PORT || 5000;
+// Start the server locally
+const PORT = 5000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
