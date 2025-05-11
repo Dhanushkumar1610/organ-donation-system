@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register as Donor - Organ Donation System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="/" class="logo">Organ Donation</a>
+            <nav class="nav">
+                <a href="/login.html">Login</a>
+                <a href="/register.html">Register</a>
+                <a href="/admin.html">Admin</a>
+                <a href="/doctor.html">Doctor</a>
+                <a href="/user.html">User</a>
+                <a href="/logout">Logout</a>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Register as an Organ Donor</h2>
+        <form action="/api/donors" method="POST">
+            <label>Name: <input type="text" name="name" required></label>
+            <label>Age: <input type="number" name="age" required></label>
+            <label>Blood Type: <input type="text" name="blood_type" placeholder="e.g., A+" required></label>
+            <label>Organ: <input type="text" name="organ" placeholder="e.g., Kidney" required></label>
+            <label>Contact (Optional): <input type="text" name="contact" placeholder="e.g., 9876543210"></label>
+            <button type="submit">Register</button>
+        </form>
+        <p id="message"></p>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const success = urlParams.get('success');
+        if (success) {
+            document.getElementById('message').innerText = success;
+        }
+    </script>
+</body>
+</html>

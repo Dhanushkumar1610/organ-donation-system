@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Login - Organ Donation System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="/" class="logo">Organ Donation</a>
+            <nav class="nav">
+                <a href="/login.html">Login</a>
+                <a href="/register.html">Register</a>
+                <a href="/admin.html">Admin</a>
+                <a href="/doctor.html">Doctor</a>
+                <a href="/user.html">User</a>
+                <a href="/logout">Logout</a>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Doctor Login</h2>
+        <form action="/doctor-login" method="POST">
+            <label>Username: <input type="text" name="username" required></label>
+            <label>Password: <input type="password" name="password" required></label>
+            <button type="submit">Login</button>
+        </form>
+        <p id="error"></p>
+    </div>
+    <footer>
+        <p>© 2025 Organ Donation System. All rights reserved.</p>
+    </footer>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        if (error) {
+            document.getElementById('error').innerText = error;
+        }
+    </script>
+</body>
+</html>

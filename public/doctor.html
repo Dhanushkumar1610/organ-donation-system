@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - Organ Donation System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="/" class="logo">Organ Donation</a>
+            <nav class="nav">
+                <a href="/login.html">Login</a>
+                <a href="/register.html">Register</a>
+                <a href="/admin.html">Admin</a>
+                <a href="/doctor.html">Doctor</a>
+                <a href="/user.html">User</a>
+                <a href="/logout">Logout</a>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Doctor Dashboard</h2>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search by name or organ...">
+            <button onclick="searchDonors()">Search</button>
+        </div>
+        <div id="donorList" class="donor-list"></div>
+    </div>
+    <script>
+        function fetchDonors(query = '') {
+            fetch('/api/donors' + (query ? `?search=${query}` : ''))
+                .then(response => response.json())
+                .then(data => {
+                    const donorList = document.getElementById('donorList');
+                    donorList.innerHTML = '';
+                    data.forEach(donor => {
+                        donorList.innerHTML += `
+                            <div class="donor-item">
+                                <span>${donor.name}, Age: ${donor.age}, Blood Type: ${donor.blood_type}, Organ: ${donor.organ}, Contact: ${donor.contact}</span>
+                            </div>
+                        `;
+                    });
+                });
+        }
+
+        function searchDonors() {
+            const searchInput = document.getElementById('searchInput').value;
+            fetchDonors(searchInput);
+        }
+
+        // Load all donors on page load
+        fetchDonors();
+    </script>
+</body>
+</html>

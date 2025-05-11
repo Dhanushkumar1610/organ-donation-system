@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register as User - Organ Donation System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="/" class="logo">Organ Donation</a>
+            <nav class="nav">
+                <a href="/login.html">Login</a>
+                <a href="/register.html">Register</a>
+                <a href="/admin.html">Admin</a>
+                <a href="/doctor.html">Doctor</a>
+                <a href="/user.html">User</a>
+                <a href="/logout" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Register as a User</h2>
+        <form action="/register-user" method="POST" onsubmit="return validateUserRegistration()">
+            <label>Username: <input type="text" name="username" id="username" required></label>
+            <label>Password: <input type="password" name="password" id="password" required></label>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p id="message"></p>
+        <p id="error"></p>
+        <p style="text-align: center;">Already have an account? <a href="/login.html">Login here</a>.</p>
+    </div>
+    <footer>
+        <p>© 2025 Organ Donation System. All rights reserved.</p>
+    </footer>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const success = urlParams.get('success');
+        const error = urlParams.get('error');
+        if (success) {
+            document.getElementById('message').innerText = success;
+        }
+        if (error) {
+            document.getElementById('error').innerText = error;
+        }
+
+        function validateUserRegistration() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username.length < 3) {
+                document.getElementById('error').innerText = 'Username must be at least 3 characters';
+                return false;
+            }
+            if (password.length < 6) {
+                document.getElementById('error').innerText = 'Password must be at least 6 characters';
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
